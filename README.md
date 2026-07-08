@@ -35,6 +35,33 @@ python -m unittest
 
 The tests cover long and short calculations, safety status thresholds, high leverage warnings, liquidation-before-stop warnings, margin warnings, and invalid stop placement.
 
+## Deploy with a Custom Domain
+
+For `liquidationguard.app`, use a host that supports custom domains directly. Render is a simple option for this MVP.
+
+### Render
+
+1. Push this repository to GitHub.
+2. Create a new Render Web Service from the GitHub repository.
+3. Render can use `render.yaml`, or you can enter these settings manually:
+
+```bash
+Build Command: pip install -r requirements.txt
+Start Command: streamlit run app.py --server.port $PORT --server.address 0.0.0.0
+```
+
+4. Deploy the service.
+5. In Render, open the service settings and add these custom domains:
+
+```text
+liquidationguard.app
+www.liquidationguard.app
+```
+
+6. Render will show the exact DNS records to add at your domain registrar. Add those records, then wait for DNS and SSL verification.
+
+Use `www.liquidationguard.app` as an alias for the root domain so both URLs work.
+
 ## Deploy on Streamlit Community Cloud
 
 1. Push this project to a GitHub repository.
@@ -50,6 +77,7 @@ The app only needs `streamlit` from `requirements.txt`.
 - `risk_engine.py` handles calculations, warnings, safety status, and decision text.
 - `validators.py` handles input validation.
 - `requirements.txt` lists runtime dependencies.
+- `render.yaml` configures Render deployment.
 - `test_risk_engine.py` tests the calculation and decision layer.
 - `test_validators.py` tests input validation.
 
