@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #070b14;
+  color: #e5e7eb;
+}
+
+input,
+select,
+textarea {
+  color-scheme: dark;
+}

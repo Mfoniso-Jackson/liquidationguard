@@ -1,85 +1,90 @@
-# LiquidationGuard
+# LiquidationGuard.app
 
-LiquidationGuard is a simple Streamlit risk calculator for futures traders. It helps traders estimate position size, account risk, margin required, and approximate liquidation distance before entering a trade.
+LiquidationGuard.app is a production-grade pre-trade risk decision tool for futures traders.
 
-The v0.1 MVP is intentionally focused: no exchange APIs, login, payments, charts, databases, AI, or exchange-specific margin logic. It is a pre-trade risk decision tool, not a trading platform.
+Core promise: **Know your risk before you enter a trade.**
 
-## Setup
+It helps traders estimate position size, notional value, margin requirement, money at risk, account risk, approximate liquidation price, liquidation distance, warnings, and a plain-English trade risk interpretation.
 
-1. Create and activate a Python virtual environment.
+## Stack
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
+- Next.js + TypeScript frontend
+- Tailwind CSS
+- FastAPI backend
+- PostgreSQL persistence
+- SQLAlchemy ORM
+- Pydantic validation
+- Docker Compose for local development
+- pytest backend tests
+- Playwright frontend E2E test
 
-2. Install dependencies.
-
-```bash
-pip install -r requirements.txt
-```
-
-3. Run the app.
-
-```bash
-streamlit run app.py
-```
-
-## Testing
-
-Run the lightweight unit tests for the calculation and validation layers.
-
-```bash
-python -m unittest
-```
-
-The tests cover long and short calculations, safety status thresholds, high leverage warnings, liquidation-before-stop warnings, margin warnings, and invalid stop placement.
-
-## Deploy with a Custom Domain
-
-For `liquidationguard.app`, use a host that supports custom domains directly. Render is a simple option for this MVP.
-
-### Render
-
-1. Push this repository to GitHub.
-2. Create a new Render Web Service from the GitHub repository.
-3. Render can use `render.yaml`, or you can enter these settings manually:
-
-```bash
-Build Command: pip install -r requirements.txt
-Start Command: streamlit run app.py --server.port $PORT --server.address 0.0.0.0
-```
-
-4. Deploy the service.
-5. In Render, open the service settings and add these custom domains:
+## Repository Structure
 
 ```text
-liquidationguard.app
-www.liquidationguard.app
+apps/
+  web/      Next.js app
+  api/      FastAPI app
+packages/
+  shared/   Shared schema/type home for future growth
+infra/
+  docker-compose.yml
+docs/
+  product-spec.md
+  api-spec.md
+  deployment.md
 ```
 
-6. Render will show the exact DNS records to add at your domain registrar. Add those records, then wait for DNS and SSL verification.
+## Local Development with Docker
 
-Use `www.liquidationguard.app` as an alias for the root domain so both URLs work.
+```bash
+docker compose -f infra/docker-compose.yml up --build
+```
 
-## Deploy on Streamlit Community Cloud
+Open:
 
-1. Push this project to a GitHub repository.
-2. Go to Streamlit Community Cloud and create a new app.
-3. Select the repository, branch, and `app.py` as the main file.
-4. Deploy.
+- Web: `http://localhost:3000`
+- API health: `http://localhost:8000/health`
 
-The app only needs `streamlit` from `requirements.txt`.
+## Backend Development
 
-## Project Structure
+```bash
+cd apps/api
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
 
-- `app.py` handles the Streamlit user interface.
-- `risk_engine.py` handles calculations, warnings, safety status, and decision text.
-- `validators.py` handles input validation.
-- `requirements.txt` lists runtime dependencies.
-- `render.yaml` configures Render deployment.
-- `test_risk_engine.py` tests the calculation and decision layer.
-- `test_validators.py` tests input validation.
+Run backend tests:
+
+```bash
+cd apps/api
+pytest
+```
+
+## Frontend Development
+
+```bash
+cd apps/web
+npm install
+npm run dev
+```
+
+Run frontend E2E:
+
+```bash
+cd apps/web
+npm run test:e2e
+```
+
+## Environment Files
+
+Copy examples before local non-Docker development:
+
+```bash
+cp apps/api/.env.example apps/api/.env
+cp apps/web/.env.example apps/web/.env.local
+```
 
 ## Disclaimer
 
