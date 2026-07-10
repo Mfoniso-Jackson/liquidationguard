@@ -22,10 +22,10 @@ Railway is the chosen production host for the current version. Deploy this monor
 - `liquidationguard-api`: FastAPI backend
 - `liquidationguard-web`: Next.js frontend
 
-Railway supports monorepos by creating separate services and configuring each service's deploy settings. This repo includes Railway config files for the API and web services:
+Railway supports monorepos by creating separate services and configuring each service's root directory. This repo includes app-local Railway config files so each service can build from the correct app path:
 
-- API config: `infra/railway-api.json`
-- Web config: `infra/railway-web.json`
+- API config: `apps/api/railway.json`
+- Web config: `apps/web/railway.json`
 
 ### 1. Create Project and Database
 
@@ -37,13 +37,14 @@ Railway supports monorepos by creating separate services and configuring each se
 
 1. Add a new service from the GitHub repo `Mfoniso-Jackson/liquidationguard`.
 2. Name it `liquidationguard-api`.
-3. Set the Railway config file path to:
+3. Set the root directory to:
 
 ```text
-/infra/railway-api.json
+apps/api
 ```
 
-4. Add environment variables. For `DATABASE_URL`, use Railway's reference-variable picker and select the PostgreSQL service's `DATABASE_URL`.
+4. Confirm Railway is using `apps/api/railway.json`. It sets the Dockerfile builder and `Dockerfile` path for the API service.
+5. Add environment variables. For `DATABASE_URL`, use Railway's reference-variable picker and select the PostgreSQL service's `DATABASE_URL`.
 
 ```bash
 DATABASE_URL=${{Postgres.DATABASE_URL}}
@@ -52,7 +53,7 @@ CORS_ORIGINS=https://liquidationguard.app,https://www.liquidationguard.app
 
 If you name the database service `liquidationguard-db`, Railway may display the reference as that service name instead of `Postgres`.
 
-5. Generate a Railway domain first, then optionally add:
+6. Generate a Railway domain first, then optionally add:
 
 ```text
 api.liquidationguard.app
@@ -62,13 +63,14 @@ api.liquidationguard.app
 
 1. Add another service from the same GitHub repo.
 2. Name it `liquidationguard-web`.
-3. Set the Railway config file path to:
+3. Set the root directory to:
 
 ```text
-/infra/railway-web.json
+apps/web
 ```
 
-4. Add the frontend environment variable after the API URL exists:
+4. Confirm Railway is using `apps/web/railway.json`. It sets the Dockerfile builder and `Dockerfile` path for the web service.
+5. Add the frontend environment variable after the API URL exists:
 
 ```bash
 NEXT_PUBLIC_API_URL=https://api.liquidationguard.app

@@ -17,8 +17,8 @@ services:
 
   api:
     build:
-      context: ..
-      dockerfile: apps/api/Dockerfile
+      context: ../apps/api
+      dockerfile: Dockerfile
     environment:
       DATABASE_URL: postgresql+psycopg://liquidationguard:liquidationguard@db:5432/liquidationguard
       CORS_ORIGINS: http://localhost:3000
@@ -30,8 +30,8 @@ services:
 
   web:
     build:
-      context: ..
-      dockerfile: apps/web/Dockerfile
+      context: ../apps/web
+      dockerfile: Dockerfile
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:8000
     ports:

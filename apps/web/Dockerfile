@@ -2,12 +2,12 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-COPY apps/web/package.json apps/web/package-lock.json ./
+COPY package.json package-lock.json ./
 RUN npm ci
 
-COPY apps/web ./
+COPY . ./
 
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
-CMD ["npm", "run", "start"]
+CMD ["sh", "-c", "npm run start -- -p ${PORT:-3000}"]
