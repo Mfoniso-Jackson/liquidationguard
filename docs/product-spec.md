@@ -21,7 +21,18 @@ Calm, professional, trustworthy, and risk-first. Avoid hype, casino language, an
 - Feedback capture
 - Shareable result summary with copy action
 - Pro roadmap placeholder
+- Pro waitlist capture
 - Legal and safety disclaimer
+
+## Pro Waitlist
+
+The waitlist validates demand before adding subscriptions or payment rails.
+
+Fields:
+
+- Email
+- Trader type optional
+- Desired Pro feature optional
 
 ## Out of Scope
 

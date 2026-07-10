@@ -2,7 +2,8 @@ export type AnalyticsEvent =
   | "landing_page_viewed"
   | "calculation_submitted"
   | "copy_summary_clicked"
-  | "feedback_submitted";
+  | "feedback_submitted"
+  | "pro_waitlist_joined";
 
 export function trackEvent(event: AnalyticsEvent, metadata?: Record<string, unknown>) {
   if (process.env.NODE_ENV !== "production") {

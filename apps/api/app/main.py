@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_settings
 from app.database import init_db
-from app.routers import feedback, risk
+from app.routers import feedback, risk, waitlist
 
 
 settings = get_settings()
@@ -36,3 +36,4 @@ def health() -> dict[str, str]:
 
 app.include_router(risk.router)
 app.include_router(feedback.router)
+app.include_router(waitlist.router)

@@ -43,3 +43,14 @@ export type FeedbackResponse = {
   id: string;
   status: "received";
 };
+
+export type WaitlistPayload = {
+  email: string;
+  trader_type?: string;
+  desired_feature?: string;
+};
+
+export type WaitlistResponse = {
+  id: string;
+  status: "joined";
+};

@@ -25,6 +25,15 @@ test("calculates risk successfully", async ({ page }) => {
       }),
     });
   });
+  await page.route("**/api/waitlist", async (route) => {
+    await route.fulfill({
+      contentType: "application/json",
+      body: JSON.stringify({
+        id: "waitlist-test",
+        status: "joined",
+      }),
+    });
+  });
 
   await page.goto("/");
   await page.getByRole("link", { name: "Calculate Risk" }).click();
@@ -34,4 +43,8 @@ test("calculates risk successfully", async ({ page }) => {
   await expect(page.getByText("Suggested position size")).toBeVisible();
   await expect(page.getByText("4.0000")).toBeVisible();
   await expect(page.getByText("Copy Summary")).toBeVisible();
+
+  await page.getByRole("textbox", { name: "Email", exact: true }).fill("trader@example.com");
+  await page.getByRole("button", { name: "Join Pro Waitlist" }).click();
+  await expect(page.getByText("You're on the Pro waitlist.")).toBeVisible();
 });

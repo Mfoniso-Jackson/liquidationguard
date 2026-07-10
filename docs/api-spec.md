@@ -72,3 +72,26 @@ Stores user feedback.
   "status": "received"
 }
 ```
+
+## `POST /api/waitlist`
+
+Stores a Pro waitlist signup. Repeated signups with the same email return the existing record.
+
+### Request
+
+```json
+{
+  "email": "trader@example.com",
+  "trader_type": "Active futures trader",
+  "desired_feature": "Portfolio risk"
+}
+```
+
+### Response
+
+```json
+{
+  "id": "uuid",
+  "status": "joined"
+}
+```

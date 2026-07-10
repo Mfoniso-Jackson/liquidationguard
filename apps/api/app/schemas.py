@@ -57,3 +57,14 @@ class FeedbackRequest(BaseModel):
 class FeedbackResponse(BaseModel):
     id: str
     status: Literal["received"] = "received"
+
+
+class WaitlistRequest(BaseModel):
+    email: EmailStr
+    trader_type: str | None = Field(default=None, max_length=120)
+    desired_feature: str | None = Field(default=None, max_length=240)
+
+
+class WaitlistResponse(BaseModel):
+    id: str
+    status: Literal["joined"] = "joined"

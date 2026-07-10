@@ -52,3 +52,13 @@ class Feedback(Base):
     email: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     message: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     rating: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+
+
+class WaitlistSignup(Base):
+    __tablename__ = "waitlist_signups"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=new_id)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=now_utc)
+    email: Mapped[str] = mapped_column(String, unique=True, nullable=False)
+    trader_type: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    desired_feature: Mapped[Optional[str]] = mapped_column(String, nullable=True)

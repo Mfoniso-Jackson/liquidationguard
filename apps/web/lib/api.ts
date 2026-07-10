@@ -1,4 +1,11 @@
-import type { FeedbackPayload, FeedbackResponse, RiskPayload, RiskResponse } from "./types";
+import type {
+  FeedbackPayload,
+  FeedbackResponse,
+  RiskPayload,
+  RiskResponse,
+  WaitlistPayload,
+  WaitlistResponse,
+} from "./types";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
@@ -30,4 +37,13 @@ export async function submitFeedback(payload: FeedbackPayload): Promise<Feedback
     body: JSON.stringify(payload),
   });
   return parseResponse<FeedbackResponse>(response);
+}
+
+export async function joinWaitlist(payload: WaitlistPayload): Promise<WaitlistResponse> {
+  const response = await fetch(`${API_BASE_URL}/api/waitlist`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  return parseResponse<WaitlistResponse>(response);
 }

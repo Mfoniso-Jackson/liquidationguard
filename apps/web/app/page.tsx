@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { Calculator } from "@/components/Calculator";
+import { WaitlistForm } from "@/components/WaitlistForm";
 import { trackEvent } from "@/lib/analytics";
 
 const disclaimer =
@@ -55,12 +56,16 @@ export default function Home() {
         <div className="grid gap-6 md:grid-cols-2">
           <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
             <h2 className="text-2xl font-semibold text-white">Pro coming soon</h2>
+            <p className="mt-3 leading-7 text-slate-300">
+              Built for traders who want stronger risk controls before adding more leverage.
+            </p>
             <ul className="mt-4 space-y-3 text-slate-300">
               {["Saved profiles", "Trade history", "Alerts", "Portfolio risk", "Exchange-specific models", "Advanced risk reports"].map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
           </div>
+          <WaitlistForm />
           <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
             <h2 className="text-2xl font-semibold text-white">Disclaimer</h2>
             <p className="mt-4 leading-7 text-slate-300">{disclaimer}</p>
